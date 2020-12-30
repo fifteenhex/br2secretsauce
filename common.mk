@@ -14,10 +14,13 @@ bootstrap:
 	git submodule update
 
 buildroot: $(OUTPUTS) $(DLDIR)
-	$(MAKE) -C buildroot
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS)
 
 buildroot-menuconfig:
-	$(MAKE) -C buildroot menuconfig
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) menuconfig
+
+buildroot-savedefconfig:
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) savedefconfig
 
 clean:
-	$(MAKE) -C $(BUILDROOT_PATH) clean
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) clean
