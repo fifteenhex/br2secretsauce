@@ -1,6 +1,8 @@
 OUTPUTS=$(PWD)/outputs
 DLDIR=$(PWD)/dl
 
+BUILDROOT_ARGS += BR2_DL_DIR=$(DLDIR) BR2_EXTERNAL="$(EXTERNALS)"
+
 .PHONY: buildroot
 
 $(OUTPUTS):
