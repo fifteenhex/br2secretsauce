@@ -1,2 +1,3 @@
 # br2secretsauce
-yummy
+
+Common Makefile targets I use for buildroot stuff.
