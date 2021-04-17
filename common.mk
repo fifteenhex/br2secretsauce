@@ -14,6 +14,12 @@ $(DLDIR):
 buildroot: $(OUTPUTS) $(DLDIR)
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS)
 
+# For CI caching. Download all of the source so you
+# can cache it and reuse it for then next build
+buildroot-dl: $(OUTPUTS) $(DLDIR)
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) defconfig
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) source
+
 buildroot-menuconfig:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) menuconfig
 
