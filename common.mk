@@ -11,10 +11,6 @@ $(OUTPUTS):
 $(DLDIR):
 	mkdir -p $(DLDIR)
 
-bootstrap:
-	git submodule init
-	git submodule update
-
 buildroot: $(OUTPUTS) $(DLDIR)
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS)
 
