@@ -26,5 +26,11 @@ buildroot-menuconfig:
 buildroot-savedefconfig:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) savedefconfig
 
+# Save a toolchain so that other people don't need to build
+# it..
+
+buildroot-toolchain:
+	$(MAKE) -C buildroot sdk
+
 clean:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) clean
