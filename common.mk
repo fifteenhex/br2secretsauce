@@ -29,8 +29,9 @@ buildroot-savedefconfig:
 # Save a toolchain so that other people don't need to build
 # it..
 
-buildroot-toolchain:
+buildroot-toolchain: $(OUTPUTS)
 	$(MAKE) -C buildroot sdk
+	cp buildroot/output/images/$(TOOLCHAIN) $(OUTPUTS)/$(PREFIX)-toolchain.tar.gz
 
 clean:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) clean
