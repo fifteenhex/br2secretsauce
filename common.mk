@@ -16,7 +16,9 @@ $(DLDIR):
 	mkdir -p $(DLDIR)
 
 buildroot: $(OUTPUTS) $(DLDIR)
-	$(MAKE) -C buildroot $(BUILDROOT_ARGS)
+# Buildroot generates so much output drone ci can
+# handle it, so tell make to be quiet
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) -s
 
 # For CI caching. Download all of the source so you
 # can cache it and reuse it for then next build
