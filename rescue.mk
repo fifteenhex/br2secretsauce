@@ -23,5 +23,5 @@ buildroot-rescue-menuconfig:
 buildroot-rescue-savedefconfig:
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) savedefconfig
 
-buidroot-rescue-clean:
+buildroot-rescue-clean:
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) clean
