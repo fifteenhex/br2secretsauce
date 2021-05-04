@@ -23,5 +23,8 @@ buildroot-rescue-menuconfig:
 buildroot-rescue-savedefconfig:
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) savedefconfig
 
+buildroot-rescue-linux-menuconfig:
+	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) linux-menuconfig
+
 buildroot-rescue-clean:
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) clean
