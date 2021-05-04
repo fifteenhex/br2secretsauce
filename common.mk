@@ -39,5 +39,8 @@ buildroot-toolchain: $(OUTPUTS)
 	$(MAKE) -C buildroot sdk
 	cp buildroot/output/images/$(TOOLCHAIN) $(OUTPUTS)/$(PREFIX)-toolchain.tar.gz
 
+buildroot-linux-menuconfig:
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) linux-menuconfig
+
 clean:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) clean
