@@ -58,5 +58,7 @@ buildroot-toolchain: $(OUTPUTS)
 buildroot-linux-menuconfig:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) linux-menuconfig
 
-clean:
+buildroot-clean:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) clean
+
+clean: buildroot-clean
