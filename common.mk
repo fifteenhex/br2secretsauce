@@ -18,7 +18,7 @@ define update_git_package
 	git -C $(DLDIR)/$(1)/ for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs -r git -C $(DLDIR)/$(1)/ branch -D
 	git -C $(DLDIR)/$(1)/ branch
 	rm -fv $(DLDIR)/$(1)/$(1)-*.tar.gz
-	rm -rv buildroot/output/build/$(1)-*
+	rm -rv $(2)/output/build/$(1)-*
 endef
 
 .PHONY: buildroot
@@ -39,8 +39,8 @@ buildroot: $(OUTPUTS) $(DLDIR)
 buildroot-dl: $(OUTPUTS) $(DLDIR)
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) defconfig
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) source
-	$(call update_git_package,linux)
-	$(call update_git_package,uboot)
+	$(call update_git_package,linux,buildroot)
+	$(call update_git_package,uboot,buildroot)
 
 buildroot-menuconfig:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) menuconfig
