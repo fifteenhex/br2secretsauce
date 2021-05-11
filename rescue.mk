@@ -17,7 +17,6 @@ buildroot-rescue-dl: $(OUTPUTS) $(DLDIR)
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) defconfig
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) source
 	$(call update_git_package,linux,buildroot_rescue)
-	$(call update_git_package,uboot,buildroot_rescue)
 
 buildroot-rescue-menuconfig:
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) menuconfig
