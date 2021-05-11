@@ -7,6 +7,20 @@ ifdef DEFCONFIG
 	BUILDROOT_ARGS += BR2_DEFCONFIG="$(DEFCONFIG)"
 endif
 
+# Update a package that uses a git repo as it's
+# upstream but the upstream rebases a known branch
+# name
+define update_git_package
+	@echo updating git package $(1)
+	git -C $(DLDIR)/$(1)/git clean -fd
+	git -C $(DLDIR)/$(1)/git fetch --force --all --tags
+	git -C $(DLDIR)/$(1)/git checkout master
+	git -C $(DLDIR)/$(1)/ for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs -r git -C $(DLDIR)/$(1)/ branch -D
+	git -C $(DLDIR)/$(1)/ branch
+	rm -fv $(DLDIR)/$(1)/$(1)-*.tar.gz
+	rm -rv buildroot/output/build/$(1)-*
+endef
+
 .PHONY: buildroot
 
 $(OUTPUTS):
@@ -25,6 +39,8 @@ buildroot: $(OUTPUTS) $(DLDIR)
 buildroot-dl: $(OUTPUTS) $(DLDIR)
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) defconfig
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) source
+	$(call update_git_package,linux)
+	$(call update_git_package,uboot)
 
 buildroot-menuconfig:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) menuconfig
