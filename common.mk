@@ -60,6 +60,9 @@ buildroot-toolchain: $(OUTPUTS) bootstrap.buildroot.stamp
 buildroot-linux-menuconfig: bootstrap.buildroot.stamp
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) linux-menuconfig
 
+buildroot-linux-savedefconfig: bootstrap.buildroot.stamp
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) linux-update-defconfig
+
 buildroot-clean:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) clean
 

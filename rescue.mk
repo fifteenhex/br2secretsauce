@@ -30,5 +30,8 @@ buildroot-rescue-savedefconfig: bootstrap.buildroot_rescue.stamp
 buildroot-rescue-linux-menuconfig: bootstrap.buildroot_rescue.stamp
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) linux-menuconfig
 
+buildroot-rescue-linux-savedefconfig: bootstrap.buildroot_rescue.stamp
+	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) linux-update-defconfig
+
 buildroot-rescue-clean: bootstrap.buildroot_rescue.stamp
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) clean
