@@ -6,26 +6,29 @@ endif
 
 .PHONY: buildroot_rescue
 
-buildroot-rescue: $(OUTPUTS) $(DLDIR)
+bootstrap.buildroot_rescue.stamp:
+	$(MAKE) -C buildroot_rescue $(BUILDROOT_ARGS) defconfig
+	touch $@
+
+buildroot-rescue: $(OUTPUTS) $(DLDIR) bootstrap.buildroot_rescue.stamp
 # Buildroot generates so much output drone ci can
 # handle it, so tell make to be quiet
 	$(MAKE) -s -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS)
 
 # For CI caching. Download all of the source so you
 # can cache it and reuse it for then next build
-buildroot-rescue-dl: $(OUTPUTS) $(DLDIR)
-	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) defconfig
+buildroot-rescue-dl: $(OUTPUTS) $(DLDIR) bootstrap.buildroot_rescue.stamp
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) source
 	$(call update_git_package,linux,buildroot_rescue)
 
-buildroot-rescue-menuconfig:
+buildroot-rescue-menuconfig: bootstrap.buildroot_rescue.stamp
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) menuconfig
 
-buildroot-rescue-savedefconfig:
+buildroot-rescue-savedefconfig: bootstrap.buildroot_rescue.stamp
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) savedefconfig
 
-buildroot-rescue-linux-menuconfig:
+buildroot-rescue-linux-menuconfig: bootstrap.buildroot_rescue.stamp
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) linux-menuconfig
 
-buildroot-rescue-clean:
+buildroot-rescue-clean: bootstrap.buildroot_rescue.stamp
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) clean
