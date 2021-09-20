@@ -29,6 +29,10 @@ $(OUTPUTS):
 $(DLDIR):
 	mkdir -p $(DLDIR)
 
+bootstrap.buildroot.stamp:
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) defconfig
+	touch $@
+
 buildroot: $(OUTPUTS) $(DLDIR)
 # Buildroot generates so much output drone ci can
 # handle it, so tell make to be quiet
@@ -36,26 +40,24 @@ buildroot: $(OUTPUTS) $(DLDIR)
 
 # For CI caching. Download all of the source so you
 # can cache it and reuse it for then next build
-buildroot-dl: $(OUTPUTS) $(DLDIR)
-	$(MAKE) -C buildroot $(BUILDROOT_ARGS) defconfig
+buildroot-dl: $(OUTPUTS) $(DLDIR) bootstrap.buildroot.stamp
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) source
 	$(call update_git_package,linux,buildroot)
 	$(call update_git_package,uboot,buildroot)
 
-buildroot-menuconfig:
+buildroot-menuconfig: bootstrap.buildroot.stamp
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) menuconfig
 
-buildroot-savedefconfig:
+buildroot-savedefconfig: bootstrap.buildroot.stamp
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) savedefconfig
 
 # Save a toolchain so that other people don't need to build
 # it..
-
-buildroot-toolchain: $(OUTPUTS)
+buildroot-toolchain: $(OUTPUTS) bootstrap.buildroot.stamp
 	$(MAKE) -C buildroot sdk
 	cp buildroot/output/images/$(TOOLCHAIN) $(OUTPUTS)/$(PREFIX)-toolchain.tar.gz
 
-buildroot-linux-menuconfig:
+buildroot-linux-menuconfig: bootstrap.buildroot.stamp
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) linux-menuconfig
 
 buildroot-clean:
