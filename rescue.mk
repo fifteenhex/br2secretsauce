@@ -7,7 +7,7 @@ endif
 .PHONY: buildroot_rescue
 
 bootstrap.buildroot_rescue.stamp:
-	$(MAKE) -C buildroot_rescue $(BUILDROOT_ARGS) defconfig
+	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) defconfig
 	touch $@
 
 buildroot-rescue: $(OUTPUTS) $(DLDIR) bootstrap.buildroot_rescue.stamp
