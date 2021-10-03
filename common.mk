@@ -3,13 +3,14 @@ DLDIR=$(PWD)/dl
 
 BUILDROOT_ARGS += BR2_DL_DIR=$(DLDIR) BR2_EXTERNAL="$(EXTERNALS)"
 
-ifdef DEFCONFIG
-	BUILDROOT_ARGS += BR2_DEFCONFIG="$(DEFCONFIG)"
+ifndef DEFCONFIG
+	$(error DEFCONFIG is not set)
 endif
+
+BUILDROOT_ARGS += BR2_DEFCONFIG="$(DEFCONFIG)"
 
 # check the prefix is defined
 ifndef PREFIX
-$(error PREFIX is not set)
 endif
 
 # check toolchain is defined
