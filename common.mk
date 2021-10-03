@@ -7,6 +7,16 @@ ifdef DEFCONFIG
 	BUILDROOT_ARGS += BR2_DEFCONFIG="$(DEFCONFIG)"
 endif
 
+# check the prefix is defined
+ifndef PREFIX
+$(error PREFIX is not set)
+endif
+
+# check toolchain is defined
+ifndef TOOLCHAIN
+$(error TOOLCHAIN is not set)
+endif
+
 # Update a package that uses a git repo as it's
 # upstream but the upstream rebases a known branch
 # name
