@@ -42,6 +42,10 @@ define update_git_package
 	- rm -rv $(2)/output/build/$(1)-*
 endef
 
+define copy_to_outputs
+	cp $(1) $(OUTPUTS)/$(addprefix $(PREFIX)-$(BRANCH_PREFIX), $(if $(2),$(2),$(notdir $(1))))
+endef
+
 .PHONY: buildroot
 
 $(OUTPUTS):
