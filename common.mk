@@ -1,3 +1,11 @@
+# workout the branch and if we need a prefix
+# master is bare.
+BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+ifneq ($(BRANCH), master)
+        BRANCH_PREFIX=$(BRANCH)-
+endif
+
+# output and dl directories
 OUTPUTS=$(PWD)/outputs
 DLDIR=$(PWD)/dl
 

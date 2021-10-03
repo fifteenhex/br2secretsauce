@@ -12,10 +12,15 @@ bootstrap.buildroot_rescue.stamp:
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) defconfig
 	touch $@
 
+ifeq ($(BRANCH), master)
 buildroot-rescue: $(OUTPUTS) $(DLDIR) bootstrap.buildroot_rescue.stamp
-# Buildroot generates so much output drone ci can
+# Buildroot generates so much output drone ci can't
 # handle it, so tell make to be quiet
 	$(MAKE) -s -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS)
+else
+buildroot-rescue:
+	@echo "rescue is only built for master, your branch is $(BRANCH)"
+endif
 
 # For CI caching. Download all of the source so you
 # can cache it and reuse it for then next build
