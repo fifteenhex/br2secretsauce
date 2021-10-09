@@ -32,11 +32,15 @@ endif
 define update_git_package
 	@echo updating git package $(1)
 	if [ -d $(DLDIR)/$(1)/ ]; then \
-		git -C $(DLDIR)/$(1)/git clean -fd; \
-		git -C $(DLDIR)/$(1)/git fetch --force --all --tags; \
-		git -C $(DLDIR)/$(1)/git checkout master; \
-		git -C $(DLDIR)/$(1)/ for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs -r git -C $(DLDIR)/$(1)/ branch -D; \
-		git -C $(DLDIR)/$(1)/ branch; \
+		GITDIR=$(DLDIR)/$(1)/git; \
+		git -C $$GITDIR clean -fd; \
+		git -C $$GITDIR fetch --force --all --tags; \
+		git -C $$GITDIR checkout master; \
+		git -C $$GITDIR for-each-ref --format '%(refname:short)' refs/heads | \
+			grep -v master | \
+			xargs -r git -C $$GITDIR branch -D; \
+		git -C $$GITDIR pull origin master; \
+		git -C $$GITDIR branch; \
 		rm -fv $(DLDIR)/$(1)/$(1)-*.tar.gz; \
 	fi
 	- rm -rv $(2)/output/build/$(1)-*
