@@ -1,3 +1,5 @@
+BUILDROOT_PATH=./buildroot
+
 # workout the branch and if we need a prefix
 # master is bare.
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
@@ -48,6 +50,10 @@ endef
 
 define copy_to_outputs
 	cp $(1) $(OUTPUTS)/$(addprefix $(PREFIX)-$(BRANCH_PREFIX), $(if $(2),$(2),$(notdir $(1))))
+endef
+
+define upload_to_tftp
+	tftp tftp -v -m binary -c put $(1) drone/$(addprefix $(PREFIX)-$(BRANCH_PREFIX), $(if $(2),$(2),$(notdir $(1))))
 endef
 
 .PHONY: buildroot
