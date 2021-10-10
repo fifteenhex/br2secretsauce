@@ -56,6 +56,10 @@ define upload_to_tftp
 	tftp tftp -v -m binary -c put $(1) drone/$(addprefix $(PREFIX)-$(BRANCH_PREFIX), $(if $(2),$(2),$(notdir $(1))))
 endef
 
+define upload_to_tftp_with_scp
+	scp $(1) drone_tftpupload@tftp:$(addprefix /srv/tftp/drone/$(PREFIX)-$(BRANCH_PREFIX), $(if $(2),$(2),$(notdir $(1))))
+endef
+
 .PHONY: buildroot
 
 $(OUTPUTS):
