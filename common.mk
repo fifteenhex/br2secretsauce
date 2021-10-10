@@ -57,7 +57,9 @@ define upload_to_tftp
 endef
 
 define upload_to_tftp_with_scp
-	scp -i ./secrets/tftp_ssh_key $(1) drone_tftpupload@tftp:$(addprefix /srv/tftp/drone/$(PREFIX)-$(BRANCH_PREFIX), $(if $(2),$(2),$(notdir $(1))))
+	scp -o 'StrictHostKeyChecking no' \
+		-i ./secrets/tftp_ssh_key \
+		$(1) drone_tftpupload@tftp:$(addprefix /srv/tftp/drone/$(PREFIX)-$(BRANCH_PREFIX), $(if $(2),$(2),$(notdir $(1))))
 endef
 
 .PHONY: buildroot
