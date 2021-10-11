@@ -3,6 +3,13 @@ BUILDROOT_PATH=./buildroot
 # workout the branch and if we need a prefix
 # master is bare.
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+
+# Fixme; Drone creates a detached head for
+# tags.
+ifeq ($(BRANCH), HEAD)
+	BRANCH=master
+endif
+
 ifneq ($(BRANCH), master)
         BRANCH_PREFIX=$(BRANCH)-
 endif
