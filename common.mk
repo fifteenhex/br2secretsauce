@@ -17,6 +17,7 @@ endif
 # output and dl directories
 OUTPUTS=$(PWD)/outputs
 DLDIR=$(PWD)/dl
+CCACHEDIR=$(PWD)/ccache
 
 BUILDROOT_ARGS += BR2_DL_DIR=$(DLDIR) BR2_EXTERNAL="$(EXTERNALS)"
 
@@ -25,6 +26,8 @@ ifndef DEFCONFIG
 endif
 
 BUILDROOT_ARGS += BR2_DEFCONFIG="$(DEFCONFIG)"
+
+BUILDROOT_ARGS += BR2_CCACHE=y BR2_CCACHE_DIR="$(CCACHEDIR)"
 
 # check the prefix is defined
 ifndef PREFIX
@@ -77,11 +80,14 @@ $(OUTPUTS):
 $(DLDIR):
 	mkdir -p $(DLDIR)
 
+$(CCACHEDIR):
+	mkdir -p $(CCACHEDIR)
+
 bootstrap.buildroot.stamp:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) defconfig
 	touch $@
 
-buildroot: $(OUTPUTS) $(DLDIR)
+buildroot: $(OUTPUTS) $(DLDIR) $(CCACHEDIR) bootstrap.buildroot.stamp
 # Buildroot generates so much output drone ci can
 # handle it, so tell make to be quiet
 	$(MAKE) -s -C buildroot $(BUILDROOT_ARGS)

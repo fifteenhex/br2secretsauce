@@ -7,6 +7,8 @@ endif
 
 BUILDROOT_RESCUE_ARGS += BR2_DEFCONFIG="$(DEFCONFIG_RESCUE)"
 
+BUILDROOT_RESCUE_ARGS += BR2_CCACHE=y BR2_CCACHE_DIR="$(CCACHEDIR)"
+
 .PHONY: buildroot_rescue
 
 bootstrap.buildroot_rescue.stamp:
@@ -14,7 +16,7 @@ bootstrap.buildroot_rescue.stamp:
 	touch $@
 
 ifeq ($(BRANCH), master)
-buildroot-rescue: $(OUTPUTS) $(DLDIR) bootstrap.buildroot_rescue.stamp
+buildroot-rescue: $(OUTPUTS) $(DLDIR) $(CCACHEDIR) bootstrap.buildroot_rescue.stamp
 # Buildroot generates so much output drone ci can't
 # handle it, so tell make to be quiet
 	$(MAKE) -s -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS)
