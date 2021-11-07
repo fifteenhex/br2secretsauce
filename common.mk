@@ -105,6 +105,9 @@ buildroot-menuconfig: bootstrap.buildroot.stamp
 buildroot-savedefconfig: bootstrap.buildroot.stamp
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) savedefconfig
 
+buildroot-tryupdate: bootstrap.buildroot.stamp
+	git -C buildroot pull --ff-only origin master
+
 # Save a toolchain so that other people don't need to build
 # it..
 buildroot-toolchain: $(OUTPUTS) bootstrap.buildroot.stamp
