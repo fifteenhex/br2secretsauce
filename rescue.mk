@@ -45,3 +45,7 @@ buildroot-rescue-linux-savedefconfig: bootstrap.buildroot_rescue.stamp
 
 buildroot-rescue-clean: bootstrap.buildroot_rescue.stamp
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) clean
+
+buildroot-rescue-tryupdate: bootstrap.buildroot_rescue.stamp
+	git -C buildroot_rescue pull --ff-only origin master
+	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) savedefconfig
