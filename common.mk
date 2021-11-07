@@ -107,6 +107,7 @@ buildroot-savedefconfig: bootstrap.buildroot.stamp
 
 buildroot-tryupdate: bootstrap.buildroot.stamp
 	git -C buildroot pull --ff-only origin master
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) savedefconfig
 
 # Save a toolchain so that other people don't need to build
 # it..
