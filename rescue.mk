@@ -9,7 +9,7 @@ BUILDROOT_RESCUE_ARGS += BR2_DEFCONFIG="$(DEFCONFIG_RESCUE)"
 
 BUILDROOT_RESCUE_ARGS += BR2_CCACHE=y BR2_CCACHE_DIR="$(CCACHEDIR)"
 
-.PHONY: buildroot_rescue
+.PHONY: buildroot-rescue
 
 bootstrap.buildroot_rescue.stamp:
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) defconfig
