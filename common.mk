@@ -129,3 +129,5 @@ buildroot-clean:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) clean
 
 clean: buildroot-clean
+
+dl: buildroot-dl

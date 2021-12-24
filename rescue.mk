@@ -51,3 +51,5 @@ buildroot-rescue-tryupdate: bootstrap.buildroot_rescue.stamp
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) savedefconfig
 
 clean: buildroot-rescue-clean
+
+dl: buildroot-rescue-dl
