@@ -49,3 +49,5 @@ buildroot-rescue-clean: bootstrap.buildroot_rescue.stamp
 buildroot-rescue-tryupdate: bootstrap.buildroot_rescue.stamp
 	git -C buildroot_rescue pull --ff-only origin master
 	$(MAKE) -C buildroot_rescue $(BUILDROOT_RESCUE_ARGS) savedefconfig
+
+clean: buildroot-rescue-clean
