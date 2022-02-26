@@ -31,6 +31,7 @@ BUILDROOT_ARGS += BR2_CCACHE=y BR2_CCACHE_DIR="$(CCACHEDIR)"
 
 # check the prefix is defined
 ifndef PREFIX
+$(error PREFIX is not set)
 endif
 
 # check toolchain is defined
