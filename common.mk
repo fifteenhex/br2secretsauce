@@ -29,6 +29,9 @@ BUILDROOT_ARGS += BR2_DEFCONFIG="$(DEFCONFIG)"
 
 BUILDROOT_ARGS += BR2_CCACHE=y BR2_CCACHE_DIR="$(CCACHEDIR)"
 
+# toplevel parallel build
+BUILDROOT_ARGS += BR2_PER_PACKAGE_DIRECTORIES=y -j$(shell nproc)
+
 # check the prefix is defined
 ifndef PREFIX
 $(error PREFIX is not set)
