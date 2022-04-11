@@ -132,6 +132,9 @@ buildroot-linux-savedefconfig: bootstrap.buildroot.stamp
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) linux-update-defconfig
 
 # uboot helpers
+buildroot-uboot-menuconfig: bootstrap.buildroot.stamp
+	$(MAKE) -C buildroot $(BUILDROOT_ARGS) uboot-menuconfig
+
 buildroot-uboot-rebuild:
 	$(MAKE) -C buildroot $(BUILDROOT_ARGS) uboot-rebuild
 
