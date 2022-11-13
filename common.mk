@@ -49,17 +49,23 @@ define update_git_package
 	@echo updating git package $(1)
 	if [ -d $(DLDIR)/$(1)/ ]; then \
 		GITDIR=$(DLDIR)/$(1)/git; \
-		git -C $$GITDIR clean -fd; \
 		git -C $$GITDIR fetch --force --all --tags; \
-		git -C $$GITDIR checkout master; \
-		git -C $$GITDIR for-each-ref --format '%(refname:short)' refs/heads | \
-			grep -v master | \
-			xargs -r git -C $$GITDIR branch -D; \
-		git -C $$GITDIR pull origin master; \
-		git -C $$GITDIR branch; \
-		rm -fv $(DLDIR)/$(1)/$(1)-*.tar.gz; \
+		CURBRANCH=`git -C $$GITDIR branch --show-current`; \
+		OURSHA=`git -C $$GITDIR rev-parse $$CURBRANCH`; \
+		CURSHA=`git -C $$GITDIR rev-parse origin/$$CURBRANCH`; \
+		if [ $$OURSHA != $$CURSHA ]; then \
+			echo "our hash ($$OURSHA) for $$CURBRANCH does not match remote hash ($$CURSHA), tricking buildroot into updating it's tarball.."; \
+			git -C $$GITDIR clean -fd; \
+			git -C $$GITDIR checkout master; \
+			git -C $$GITDIR for-each-ref --format '%(refname:short)' refs/heads | \
+				grep -v master | \
+				xargs -r git -C $$GITDIR branch -D; \
+			git -C $$GITDIR pull origin master; \
+			git -C $$GITDIR branch; \
+			rm -fv $(DLDIR)/$(1)/$(1)-*.tar.gz; \
+			rm -rfv $(2)/output/build/$(1)-*; \
+		fi; \
 	fi
-	- rm -rv $(2)/output/build/$(1)-*
 endef
 
 define copy_to_outputs
